@@ -13,7 +13,7 @@ public class LongNumPlus {
 			ArrayList<String> list = new ArrayList<String>();
 			String str;
 			while ((str = br.readLine()) != null) {
-				System.out.println(str);
+				System.out.printf("%30s\n", str);
 				list.add(str);
 			}
 			return list;
@@ -42,15 +42,27 @@ public class LongNumPlus {
 		ArrayList<Integer> arr1 = reverseNumber(strArr.get(0));
 		ArrayList<Integer> arr2 = reverseNumber(strArr.get(1));
 				
-		// 배열 더하기
+		// 배열 더하기 ==> arr1이 arr2보다 개수가 많다고 가정.
 		if (arr1.size() < arr2.size()) {
-			
+			ArrayList<Integer> temp = arr1;
+			arr1 = arr2;
+			arr2 = temp;
+		}
+		int add = 0 ;
+		for (int i = 0; i < arr2.size(); i++) {
+			int sum = arr1.get(i) + arr2.get(i) + add ;
+			if (10 <= sum) add = 1 ;
+			else add = 0;
+			arr1.set(i, sum % 10) ;
 		}
 		
 		
 		// 출력하기
-
-		
+		String result = "";
+		for (int i = arr1.size() - 1 ; 0 <= i ; i--) {
+			result += arr1.get(i);
+		}
+		System.out.printf("%30s\n", result);
 	}
 
 }
