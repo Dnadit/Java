@@ -40,10 +40,10 @@ public class ArrayList정렬Merge {
 			String s2 = new String(bytes2);
 			
 			System.out.println("s = " + s1);
-			sarray1 = s1.split(" |\n|,");
+			sarray1 = s1.split("\r\n|,");
 			
 			System.out.println("s = " + s2);
-			sarray2 = s2.split(" |\n|,");
+			sarray2 = s2.split("\r\n|,");
 			
 			// file1에서 read하여 list1.add()한다.
 			// 배열을 list로 만드는 방법
@@ -71,6 +71,7 @@ public class ArrayList정렬Merge {
 			Collections.sort(list2);
 			for (String city : list2)
 				System.out.print(city + " ");
+			System.out.println();
 			ArrayList<String> list3 = new ArrayList<String>();
 
 			Iterator<String> iter1 = list1.iterator(); //iter1변수가 ArrayList에 커서(포인터)를 가지고 있다.
@@ -78,28 +79,27 @@ public class ArrayList정렬Merge {
 			// iterator를 사용하여 merge한다
 			String data1 = iter1.next();
 			String data2 = iter2.next();			
-			while (iter1.hasNext() && iter2.hasNext()) {				
+			while (iter1.hasNext() || iter2.hasNext()) {				
 				if (data1.compareTo(data2) < 0) {
 					list3.add(data1);
 					data1 = iter1.next();
 				} else if (data1.compareTo(data2) > 0) {
 					list3.add(data2);
 					data2 = iter2.next();
+				} else if (!iter1.hasNext() && iter2.hasNext()) { 
+					list3.add(data2);
+					data2 = iter2.next();
+				} else if (!iter2.hasNext() && iter1.hasNext()) {
+					list3.add(data1);
+					data1 = iter1.next();
 				} else {
 					list3.add(data1);
 					list3.add(data2);
 					data1 = iter1.next();
 					data2 = iter2.next();
 				}
-			}
-			while (iter1.hasNext()) {
-				list3.add(data1);
-				data1 = iter1.next();
-			}
-			while (iter2.hasNext()) {
-				list3.add(data2);
-				data2 = iter2.next();
-			}
+				
+			}			
 			//ArrayList를 merge하는 코드 구현 list3 = list1 + list2(merge)
 			
 			
@@ -116,6 +116,7 @@ public class ArrayList정렬Merge {
 			System.out.println("merge:: ");
 			for (String city : list3)
 				System.out.print(city + " ");
+			System.out.println();
 			// ArrayList를 배열로 전환
 			String[] st = list3.toArray(new String[list3.size()]);
 			// binary search 구현

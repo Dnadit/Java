@@ -42,7 +42,7 @@ public class LongNumPlus {
 		ArrayList<Integer> arr1 = reverseNumber(strArr.get(0));
 		ArrayList<Integer> arr2 = reverseNumber(strArr.get(1));
 				
-		// 배열 더하기 ==> arr1이 arr2보다 개수가 많다고 가정.
+		// 배열 더하기 ==> arr1이 arr2보다 개수가 많다고 가정. size 메서드 찾아보기.
 		if (arr1.size() < arr2.size()) {
 			ArrayList<Integer> temp = arr1;
 			arr1 = arr2;
