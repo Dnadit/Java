@@ -14,13 +14,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 //10장 Collection, Test01, Test02를 사용
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Collections;
-public class 중복없는리스트Merge {
+public class Chap2_ArrayListMerge {
 //string 정렬, binary search 구현
 //1단계: string, 2단계: string 객체,  Person 객체들의 list\
 //file1: 서울,북경,상해,서울,도쿄, 뉴욕,부산
@@ -71,6 +72,28 @@ public class 중복없는리스트Merge {
 			for (String city : sarray2)
 				System.out.print(city + " ");
 			System.out.println("+++++++");
+			
+			//Comparator 사용방법
+			//방법1
+			Arrays.sort(sarray1, (a,b) -> a.compareTo(b)); //Fruit에 compareTo()가 있어도 람다식 우선 적용
+			//* 
+			 
+			//방법2
+			Arrays.sort(sarray1, new Comparator<String>() {
+			      @Override
+			      public int compare(String a1, String a2) {
+			    	  return a1.compareTo(a2);
+			      }
+			   });
+			   
+			//방법3
+		    Comparator<String> cc1 = new Comparator<String>() {//익명클래스 사용 
+		        public int compare(String u1, String u2) {
+		          return u1.compareTo(u2);
+		        }
+		      };
+		      Arrays.sort(sarray1,cc1);
+			
 			// file1에서 read하여 list1.add()한다.
 			// 배열을 list로 만드는 방법
 			// 방법1:
@@ -98,27 +121,43 @@ public class 중복없는리스트Merge {
 			list1 = removeDuplicate(list1);
 			list2 = removeDuplicate(list2);
 			
-			System.out.println("중복제거 list1 : " + list1);
-			System.out.println("중복제거 list2 : " + list2);
-
-
-			System.out.print("\n" + "list1******");
+			System.out.print("\n" + "중복제거 후 list1 : ");
 			for (String city : list1)
 				System.out.print(city + " ");
-			System.out.print("\n" + "list2******");
+			System.out.print("\n" + "중복제거 후 list2 : ");
 			for (String city : list2)
 				System.out.print(city + " ");
 			ArrayList<String> list3 = new ArrayList<String>();
+			//list를 사용하여 merge
+			ArrayList<String> list4 = new ArrayList<String>();
+			int ix = 0, iy = 0;
+			while (ix < list1.size() && iy < list2.size()) {
+				if (list1.get(ix).compareTo(list2.get(iy)) < 0) {
+					list4.add(list1.get(ix++)); // list3에 list1.get(ix)를 명령행이 다 끝나고 나서, ix = ix + 1.
+				} else if(list1.get(ix).compareTo(list2.get(iy)) > 0) {
+					list4.add(list2.get(iy++));
+				} else {
+					list4.add(list1.get(ix++));
+					iy++;
+				}
+			}
+			while (ix < list1.size()) {
+				list4.add(list1.get(ix++));
+			}
+			while (iy < list2.size()) {
+				list4.add(list2.get(iy++));
+			}
+			System.out.println("\nlist4 : " + list4);
 			//--------------------- array version: merge에 중복 제거하면 정상 동작함 
 			String [] sl1 = new String[list1.size()];
 			String [] sl2 = new String[list2.size()];
 			String [] sl3 = new String[list1.size() + list2.size()];
 			sl1 = list1.toArray(sl1);
 			sl2 = list2.toArray(sl2);
-			System.out.println();
+			System.out.println("\nsl1 : ");
 			for (String city : sl1)
 				System.out.print(city + " ");
-			System.out.println();
+			System.out.println("\nsl2 : ");
 			for (String city : sl2)
 				System.out.print(city + " ");
 			System.out.println();

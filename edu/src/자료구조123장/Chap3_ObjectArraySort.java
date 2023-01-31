@@ -23,7 +23,12 @@ class Fruit implements Comparable<Fruit> {
 
 		@Override //메소드를 오버라이드 하겠다는 의미, 해당 메소드가 없다면 컴파일오류 발생.
 		public int compareTo(Fruit o) {
-		//구현할 부분			
+		//구현할 부분
+			if (o.price < this.price) {
+				return 1;				
+			} else if (o.price > this.price) {
+				return -1;
+			}
 			return 0;
 		}
 	public int getPrice() {
@@ -87,13 +92,13 @@ public class Chap3_ObjectArraySort {
 	lst2.add(new Fruit("블루베리", 500));
 	lst2.add(new Fruit("구지뽕", 300));
 	System.out.println();
-	System.out.println("새로운 리스트2::");
+	System.out.println("리스트2::");
   for ( Fruit city: lst2)
   	System.out.print(" " + city);
 //  Arrays.sort(lst2);
-  Collections.sort(lst2);
+    Collections.sort(lst2);
 	System.out.println();
-	System.out.println("새로운 리스트2::");
+	System.out.println("정렬된 리스트2::");
   for ( Fruit city: lst2)
   	System.out.print(" " + city);
   
@@ -101,9 +106,39 @@ public class Chap3_ObjectArraySort {
 	
 	Iterator<Fruit> iter1 = lst1.iterator();
 	Iterator<Fruit> iter2 = lst2.iterator();
-	Fruit data1 = iter1.next();
-	Fruit data2 = iter2.next();
+	Fruit data1 = iter1.next() ;
+	Fruit data2 = iter2.next() ;
+	System.out.println();	
   	//구현할 부분
+	while (iter1.hasNext() && iter2.hasNext()) {
+		if (data1.compareTo(data2) < 0) {	
+			lst3.add(data1);
+			data1 = iter1.next();			
+		} else if(data1.compareTo(data2) > 0) {
+			lst3.add(data2);
+			data2 = iter2.next();
+		} else {
+			lst3.add(data1);
+			data1 = iter1.next();
+			data2 = iter2.next();
+		}
+	}
+	if (data1.compareTo(data2) < 0) {
+		lst3.add(data1);
+		lst3.add(data2);
+	} else {
+		lst3.add(data2);
+		lst3.add(data1);
+	}
+//	while (iter1.hasNext()) {
+//		lst3.add(data1);
+//		data1 = iter1.next();
+//	}
+//	while (iter2.hasNext()) {
+//		lst3.add(data2);
+//		data2 = iter2.next();
+//	}	
+	
 	System.out.println();
   System.out.println("merge:: ");
   for ( Fruit city: lst3)
@@ -136,5 +171,18 @@ public class Chap3_ObjectArraySort {
 	// 교재 111 페이지 참조하여 구현
 	static int binSearch(Fruit[]a, int n, Fruit f) {
 	//구현할 부분
+		int pl = 0;
+		int pr = n-1;
+		
+		do {
+			int pc = (pl + pr) /2 ;
+			if (a[pc].compareTo(f) == 0)
+				return pc ;
+			else if (a[pc].compareTo(f) > 0)
+				pr = pc - 1;
+			else
+				pl = pc + 1;
+		} while (pl <= pr);
+		return -1;
 	}
 }
