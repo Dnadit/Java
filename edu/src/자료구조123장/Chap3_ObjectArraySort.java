@@ -163,10 +163,10 @@ public class Chap3_ObjectArraySort {
 	fa = lst3.toArray(fa);
   int result3 = Arrays.binarySearch(fa, newFruit, cc);
 	System.out.println("\nArrays.binarySearch() 조회결과::" + lst3.get(result3));
-	/*
+	
 	int result2 = binSearch(fa, lst3.size(), newFruit);
 	System.out.println("\nbinSearch() 조회결과:" + lst3.get(result2));
-	*/
+	
 	}
 	// 교재 111 페이지 참조하여 구현
 	static int binSearch(Fruit[]a, int n, Fruit f) {
@@ -184,5 +184,6 @@ public class Chap3_ObjectArraySort {
 				pl = pc + 1;
 		} while (pl <= pr);
 		return -1;
-	}
+	}	
 }
+
