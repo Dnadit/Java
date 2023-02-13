@@ -38,7 +38,7 @@ public class Chap4_Test_Queue {
 
 	public static void main(String[] args) {
 		Scanner stdIn = new Scanner(System.in);		
-		PointQueue s = new PointQueue(12);		
+		PointQueue s = new PointQueue(6);		
 		Random random = new Random();
 		int rndx = 0, rndy = 0;
 		Point p = null;
@@ -59,8 +59,9 @@ public class Chap4_Test_Queue {
 				p = new Point(rndx,rndy);
 				try {
 					s.push(p);
-				} catch(PointQueue.OverflowIntQueueException e) {
-					System.out.println("stack이 가득찼습니다.");
+					System.out.println("push한 데이터는 " + p + "입니다.");
+				} catch(PointQueue.OverflowIntQueueException e) {					
+					System.out.println("stack이 가득찼습니다.");					
 				}
 				break;
 
