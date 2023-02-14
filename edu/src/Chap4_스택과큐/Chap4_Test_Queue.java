@@ -61,7 +61,8 @@ public class Chap4_Test_Queue {
 					s.push(p);
 					System.out.println("push한 데이터는 " + p + "입니다.");
 				} catch(PointQueue.OverflowIntQueueException e) {					
-					System.out.println("stack이 가득찼습니다.");					
+					System.out.println("stack이 가득찼습니다.");
+					
 				}
 				break;
 

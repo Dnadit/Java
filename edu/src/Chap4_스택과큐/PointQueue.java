@@ -7,6 +7,7 @@ public class PointQueue {
 	private int circleCapacity; // 크기가 하나 큰 배열
 	private int front; // 맨 처음 요소 커서
 	private int rear; // 맨 끝 요소 커서	
+	
 
 	// --- 실행시 예외: 큐가 비어있음 ---//
 	public class EmptyIntQueueException extends RuntimeException {
@@ -22,10 +23,9 @@ public class PointQueue {
 
 	// --- 생성자(constructor) ---//
 	public PointQueue(int maxlen) {
-		front = 0;
+		front = -1;
 		rear = -1;
-		capacity = maxlen;
-		circleCapacity = maxlen+1;
+		capacity = maxlen;	
 		try {
 			data = new Point[capacity]; // 큐 본체용 배열을 생성
 		} catch (OutOfMemoryError e) { // 생성할 수 없음
@@ -35,26 +35,34 @@ public class PointQueue {
 
 	// --- 큐에 데이터를 인큐 ---//
 	public Point push(Point x) throws OverflowIntQueueException {		
-		if (isFull())
+		if (isFull()) {
+			rear = (rear+1)%capacity;
 			throw new OverflowIntQueueException(); // 큐가 가득 찼음	
+		}			
 		else {
-			data[++rear] = x;
-			front--;	
-			if (front <= 0)
-				front = 0 ;
+			data[++rear] = x;						
+			if (rear >= capacity)
+				rear = -1 ;
+			System.out.println(front);
+			System.out.println(rear);
+			mode = 1;
 			return x;
 		}		
 	}
 
 	// --- 큐에서 데이터를 디큐 ---//
 	public Point pop() throws EmptyIntQueueException {
-		if (isEmpty())		
+		if (isEmpty()) {
+			front = (front+1)%capacity;
 			throw new EmptyIntQueueException(); // 큐가 비어있음
+		}			
 		else {
-			Point x = data[front++];
-			rear--;
-			if (rear <= -1)
-				rear = -1;
+			Point x = data[++front];			
+			if (front >= capacity)
+				front = -1;
+			System.out.println(front);
+			System.out.println(rear);		
+			mode = 0;			
 			return x;
 		}					
 	}
@@ -68,7 +76,8 @@ public class PointQueue {
 
 	// --- 큐를 비움 ---//
 	public void clear() {
-		front = rear = 0;
+		front = 0;
+		rear = 0;
 	}
 
 	// --- 큐에서 x를 검색하여 인덱스(찾지 못하면 –1)를 반환 ---//
@@ -88,17 +97,21 @@ public class PointQueue {
 
 	// --- 큐에 쌓여 있는 데이터 개수를 반환 ---//
 	public int size() {
-		return rear+1 - front;
+		return  rear - front;
 	}
 
 	// --- 큐가 비어있는가? ---//
 	public boolean isEmpty() {		
-		return (front == rear+1);
+		if (mode == 0)
+			return (front == rear);
+		return false;
 	}
 
 	// --- 큐가 가득 찼는가? ---//
 	public boolean isFull() {
-		return (rear+1 == capacity);
+		if (mode == 1)
+			return ((rear+1)%capacity-1 == -front); 
+		return false;
 	}
 
 	// --- 큐 안의 모든 데이터를 프런트 → 리어 순으로 출력 ---//
