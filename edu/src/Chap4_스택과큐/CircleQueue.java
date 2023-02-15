@@ -1,5 +1,8 @@
 package Chap4_스택과큐;
 
+import java.util.Random;
+import java.util.Scanner;
+
 public class CircleQueue {
 	private Point[] que ; // Point 타입인 배열 que.
 	private int front, rear ;
@@ -21,23 +24,38 @@ public class CircleQueue {
 	// 생성자
 	public CircleQueue() {
 		isEmpty = true ;		
-		que = new Point[6];
-		que[0] = new Point(1,2);
-		Point temp = new Point(1, 2); 
+		que = new Point[6];		
 	}
 	// 인큐
 	public Point enque(Point x) throws OverflowIntQueueException {
 		if (rear == front && !isEmpty) 
 			throw new OverflowIntQueueException();	
 		isEmpty = false;
-		que[rear++] = x;
-		if (rear%que. == front)
+		que[rear++] = x;		
+		return x ;
+	}
+	//디큐
+	public Point deque(Point x) throws OverflowIntQueueException {
+		if (rear == front) 
+			throw new EmptyIntQueueException();	
+		isEmpty = true;
+		que[front++] = x;	
 		return x ;
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		int rndx, rndy ;
+		Random random = new Random();
+		Point p = null;
+		Scanner sc = new Scanner(System.in);
+		System.out.println("1.인큐 2.디큐");
+		int input = sc.nextInt();
+		switch (input) {
+		case 1:
+			rndx = random.nextInt() % 20;
+			rndy = random.nextInt() % 20;
+			p = new Point(rndx, rndy);
+		}
 	}
-
 }
