@@ -39,7 +39,7 @@ public class PointQueue {
 			rear = (rear+1)%capacity;
 			throw new OverflowIntQueueException(); // 큐가 가득 찼음	
 		}			
-		else {
+		else {a
 			data[++rear] = x;						
 			if (rear >= capacity)
 				rear = -1 ;
