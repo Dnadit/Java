@@ -1,7 +1,39 @@
+//포인트 타입의 객체를 포함한 배열로 원형큐 구현하기.
+
 package Chap4_스택과큐;
 
 import java.util.Random;
 import java.util.Scanner;
+
+class Point {
+	private int ix;
+	private int iy;
+
+	public Point(int x, int y) {
+		ix = x;
+		iy = y;
+	}
+
+	public String toString() {
+		return "<" + ix + ", " + iy + ">";
+	}
+
+	public int getX() {
+		return ix;
+	}
+
+	public int getY() {
+		return iy;
+	}
+
+	public void setX(int x) {
+		ix = x;
+	}
+
+	public void setY(int y) {
+		iy = y;
+	}
+}
 
 public class CircleQueue {
 	private Point[] que ; // Point 타입인 배열 que.
@@ -13,7 +45,11 @@ public class CircleQueue {
 		return capacity;
 	}
 	public int size() {
-		return rear - front ;
+		if (isEmpty && rear == front)
+			return 0;
+		if (rear <= front)
+			return rear+capacity - front;
+		return rear - front;
 	}
 	
 	
@@ -36,25 +72,31 @@ public class CircleQueue {
 		que = new Point[capacity];		
 	}
 	// 인큐
-	public Point enque(Point temp) throws OverflowIntQueueException {
-		if (rear%capacity == front && !isEmpty) 
-			throw new OverflowIntQueueException();	
-		isEmpty = false;		
+	public Point enque(Point temp) throws OverflowIntQueueException {		
+		if (rear == front && !isEmpty) {
+			System.out.println("rear : " + rear + ", front : " + front);			
+			throw new OverflowIntQueueException();
+		}
+		isEmpty = false;
 		que[rear++] = temp;
+		rear = rear%capacity;
 		System.out.println("rear : " + rear + ", front : " + front);
 		return temp ;
 	}
 	//디큐
-	public Point deque() throws OverflowIntQueueException {
-		if (rear == front) {
+	public Point deque() throws OverflowIntQueueException {		
+		if (rear == front && isEmpty) {
 			rear = 0;
 			front = 0;
+			isEmpty = true;
+			System.out.println("rear : " + rear + ", front : " + front);
 			throw new EmptyIntQueueException();
 		}
 		isEmpty = true;
 		Point temp = que[front++];
+		front = front % capacity;
 		System.out.println("rear : " + rear + ", front : " + front);
-		return temp ;
+		return temp ;		
 	}
 
 	public static void main(String[] args) {
@@ -76,7 +118,7 @@ public class CircleQueue {
 				try {
 					s.enque(p);
 					System.out.println("인큐한 데이터는 " + p + "입니다.");
-				} catch(CircleQueue.OverflowIntQueueException e) {
+				} catch(CircleQueue.OverflowIntQueueException e) {	
 					System.out.println("que가 가득찼습니다.");
 				}
 				break;
