@@ -1,4 +1,4 @@
-package Chap5_recursive;
+package Chap05_recursive;
 
 //재귀에 대한 이해를 돕는 순수 재귀 메서드
 

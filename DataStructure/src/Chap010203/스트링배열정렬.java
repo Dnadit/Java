@@ -1,4 +1,4 @@
-package 자료구조123장;
+package Chap010203;
 
 import java.io.FileOutputStream;
 //12장 입출력 작업하기 Test06_2를 수정하여 스트링 정렬하기, Test11/596페이지

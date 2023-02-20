@@ -34,66 +34,52 @@
 //     }
 
 
-package Chap5_recursive;
+package Chap05_recursive;
 
-import Chap4_스택과큐.GenericStack.EmptyGenericStackException;
-import Chap4_스택과큐.GenericStack.OverflowGenericStackException;
+import Chap05_recursive.MyStack.EmptyMyStackException;
 
 public class EightQueen {
-	
-	void print(int[][]d) {
-		for (int i=0; i<d[0].length; i++) {
-			for(int j=0; j<d.length; j++) {
-				System.out.print(d[i][j] + " ");
-			}
-			System.out.println();
-		}
+	static int nextMove(int[][]d, int row, int y) {
+		for (y = 0; y < d[0].length; y++)
+		if (checkMove(d, row, y))
+			return y;
+		return -1;		
 	}
-	
-	int NextMove(int[][] d, int x, int y) {
-		while (y < d.length) {
-			if(CheckMove(d,x,y))
-				return 1;
-			y++;
-		}
-		return 0;
-	}
-	
-	boolean CheckMove(int[][]d, int x, int y) {
+	static boolean checkMove(int[][]d, int x, int y) {
 		if (checkRow(d, x) && checkCol(d, y) && checkDiagSW(d, x, y) && checkDiagSE(d, x, y))
 			return true;
 		return false;		
 	}
-	boolean checkRow(int[][] d, int x) {
-		for (int i = 0; i < d.length; i++) {
+	static boolean checkRow(int[][] d, int x) {
+		for (int i = 0; i < 8; i++) {
 			if (d[x][i] == 1)
 				return false;
 		}
 		return true;
 	}
-	boolean checkCol(int[][] d, int y) {
-		for (int i=0; i < d.length; i++) {
+	static boolean checkCol(int[][] d, int y) {
+		for (int i = 0; i < 8; i++) {
 			if (d[i][y] == 1)
 				return false;
 		}
 		return true;
 	}
-	boolean checkDiagSW(int[][] d,int x,int y) {
+	static boolean checkDiagSW(int[][] d,int x,int y) {
 		// 오른쪽 위
-		for (int i=x, j=y; i>0 && j<8; i--,j++) {
+		for (int i=x, j=y; i>0 && j<d.length; i--,j++) {
 			if (d[i][j] == 1)
 				return false;
 		}
 		// 왼쪽 아래
-		for (int i=x, j=y; i<8 && j>0; i++,j--) {
+		for (int i=x, j=y; i<d.length && j>0; i++,j--) {
 			if (d[i][j] == 1)
 				return false;
 		}
 		return true;
 	}
-	boolean checkDiagSE(int[][] d,int x,int y) {
+	static boolean checkDiagSE(int[][] d,int x,int y) {
 		// 오른쪽 아래
-		for (int i=x, j=y; i<8 && j<8; i++,j++) {
+		for (int i=x, j=y; i<d.length && j<d.length; i++,j++) {
 			if(d[i][j] == 1)
 				return false;
 		}
@@ -105,29 +91,50 @@ public class EightQueen {
 		return true;
 	}
 
-	void SolveQueen(int[][] d) {
+	static void SolveQueen(int[][] d) {
 		int x = 0;
-		int y = 0;
-		int count = 0;
+		int y = 0;		
 		MyStack s = new MyStack(100);
-		Point p = new Point(x, y);
+		Point p = new Point(0, 0);
 		
-		while (count < 8) {
-			d[x][y] = 1;
-			s.push(p);
-			x++;
-			if (CheckMove(d, x, y)) {
-				d[x][y] = 1;
-			}
+		while (x < 8) {	
+			while (y < 8) {
+				y = nextMove(d,x,y);
+				if ( y != -1) {
+					d[x][y] = 1;
+					s.push(new Point(x, y));
+					x++;
+					y=0;
+					break;
+				} else {
+					try {
+						p = s.pop();
+						x = p.getX();
+						y = p.getY();
+						d[x][y] = 0;
+						y++;						
+					} catch (EmptyMyStackException e) {						
+						e.printStackTrace();
+					}
+				}
+			}			
 		}
 	}
 	
-
-
+	static void print(int[][]d) {
+		for (int i=0; i<d[0].length; i++) {
+			for(int j=0; j<d.length; j++) {
+				System.out.print(d[i][j] + " ");
+			}
+			System.out.println();
+		}
+	}
+	
 	public static void main(String[] args) {		
 		int [][] data;
 		data = new int [8][8] ;
 		SolveQueen(data);
+		print(data);
 	}
 
 }

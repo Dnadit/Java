@@ -1,5 +1,5 @@
 //4장 소스코드의 Point 버젼을 학습한 후에 Queue 버젼을 구현한다.
-package Chap4_스택과큐;
+package Chap04_스택과큐;
 
 import java.util.Random;
 import java.util.Scanner;

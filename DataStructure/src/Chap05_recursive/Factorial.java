@@ -1,4 +1,4 @@
-package Chap5_recursive;
+package Chap05_recursive;
 
 //팩토리얼 값을 재귀적으로 구함
 

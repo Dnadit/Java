@@ -1,4 +1,4 @@
-package Chap5_recursive;
+package Chap05_recursive;
 
 //유클리드 호제법으로 최대공약수를 구함
 

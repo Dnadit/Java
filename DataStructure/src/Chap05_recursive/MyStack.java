@@ -1,11 +1,10 @@
-package Chap5_recursive;
+package Chap05_recursive;
 
 class MyStack {		
 	//--- 실행시 예외: 스택이 비어있음 ---//		
 	public class EmptyMyStackException extends Exception {
 		private static final long serialVersionUID = 1L;
-		public EmptyMyStackException() {
-			super();
+		public EmptyMyStackException() {			
 		}
 	}
 
@@ -27,19 +26,17 @@ class MyStack {
 		this.capacity = capacity;
 		// this.data = new T[capacity]; // 스택 본체용 배열을 생성
 		try {
-		data = new Point[capacity];
+			data = new Point[capacity];
 		} catch (OutOfMemoryError e) {
 			capacity = 0;
 		}	
 	}
 
 	//--- 스택에 x를 푸시 ---//
-	public Point push(Point x) throws OverflowMyStackException {
-		System.out.println("top = " + top +"capacity = " + capacity);
+	public Point push(Point x) throws OverflowMyStackException {		
 		if (top >= capacity)
 			throw new OverflowMyStackException();
-		return data[top++] = x;
-			
+		return data[top++] = x;			
 	}
 	
 	//--- 스택에서 데이터를 팝(정상에 있는 데이터를 꺼냄) ---//

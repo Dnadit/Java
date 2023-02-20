@@ -1,6 +1,6 @@
 //포인트 타입의 객체를 포함한 배열로 원형큐 구현하기.
 
-package Chap4_스택과큐;
+package Chap04_스택과큐;
 
 import java.util.Random;
 import java.util.Scanner;

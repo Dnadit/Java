@@ -34,14 +34,92 @@
 //     }
 
 
-package Chap5_recursive;
+package Chap05_recursive;
 
-import Chap4_스택과큐.GenericStack.EmptyGenericStackException;
-import Chap4_스택과큐.GenericStack.OverflowGenericStackException;
-
-public class EightQueen2 {
+public class EightQueen2 {	
+	static int row = 8;
+	static int col = 8;
+	static int[][]field = new int [row][col] ;
 	
-	void print(int[][]d) {
+	static boolean check(int x, int y) {
+		if(checkRow(x)&&checkCol(y)&&checkSlash(x, y)&&checkBackslash(x, y))
+			return true;
+		return false;
+	}
+	static boolean checkRow(int x) {
+		for(int i=0; i<row; i++) {
+			if (field[x][i] == 1)
+				return false;
+		}
+		return true;
+	}
+	
+	static boolean checkCol(int y) {
+		for(int i=0; i<col; i++) {
+			if (field[i][y] == 1)
+				return false;
+		}
+		return true;
+	}
+	
+	static boolean checkSlash(int x, int y) {
+		int dx = x;
+		int dy = y;
+		while (dx >= 0 && dx < row && dy >= 0 && dy < col) {
+			if (field[dx][dy] == 1)
+				return false;
+			dx--;
+			dy++;
+		}
+		while (dx >=0 && dx < row && dy >= 0 && dy < col) {
+			if (field[dx][dy] == 1)
+				return false;
+			dx++;
+			dy--;
+		}
+		return true;
+	}
+	
+	static boolean checkBackslash(int x, int y) {
+		int dx = x;
+		int dy = y;
+		while (dx >= 0 && dx < row && dy >= 0 && dy < col) {
+			if (field[dx][dy] == 1)
+				return false;
+			dx--;
+			dy--;
+		}
+		while (dx >= 0 && dx < row && dy >= 0 && dy < col) {
+			if (field[dx][dy] == 1)
+				return false;
+			dx++;
+			dy++;
+		}
+		return true;
+	}
+	
+	static void solveQueen() {
+		Point p = new Point(0,0);
+		MyStack s = new MyStack(100);
+		int x = p.getX();
+		int y = p.getY();
+		int count = 0;
+		while(x < row) {
+			while(y < col) {
+				if(check(x, y)) {
+					field[x][y] =1;
+					s.push(new Point(x,y));
+					y = 0;
+					break;
+				}
+				y ++;
+			}
+			x++;
+		}
+	}
+	
+	static void print() {
+		int[][]d = new int [row][col];
 		for (int i=0; i<d[0].length; i++) {
 			for(int j=0; j<d.length; j++) {
 				System.out.print(d[i][j] + " ");
@@ -50,84 +128,9 @@ public class EightQueen2 {
 		}
 	}
 	
-	int NextMove(int[][] d, int x, int y) {
-		while (y < d.length) {
-			if(CheckMove(d,x,y))
-				return 1;
-			y++;
-		}
-		return 0;
-	}
 	
-	boolean CheckMove(int[][]d, int x, int y) {
-		if (checkRow(d, x) && checkCol(d, y) && checkDiagSW(d, x, y) && checkDiagSE(d, x, y))
-			return true;
-		return false;		
-	}
-	boolean checkRow(int[][] d, int x) {
-		for (int i = 0; i < d.length; i++) {
-			if (d[x][i] == 1)
-				return false;
-		}
-		return true;
-	}
-	boolean checkCol(int[][] d, int y) {
-		for (int i=0; i < d.length; i++) {
-			if (d[i][y] == 1)
-				return false;
-		}
-		return true;
-	}
-	boolean checkDiagSW(int[][] d,int x,int y) {
-		// 오른쪽 위
-		for (int i=x, j=y; i>0 && j<8; i--,j++) {
-			if (d[i][j] == 1)
-				return false;
-		}
-		// 왼쪽 아래
-		for (int i=x, j=y; i<8 && j>0; i++,j--) {
-			if (d[i][j] == 1)
-				return false;
-		}
-		return true;
-	}
-	boolean checkDiagSE(int[][] d,int x,int y) {
-		// 오른쪽 아래
-		for (int i=x, j=y; i<8 && j<8; i++,j++) {
-			if(d[i][j] == 1)
-				return false;
-		}
-		// 왼쪽 위
-		for (int i=x, j=y; i>0 && j>0; i--,j--) {
-			if(d[i][j] == 1)
-				return false;
-		}
-		return true;
-	}
-
-	void SolveQueen(int[][] d) {
-		int x = 0;
-		int y = 0;
-		int count = 0;
-		MyStack s = new MyStack(100);
-		Point p = new Point(x, y);
-		
-		while (count < 8) {
-			d[x][y] = 1;
-			s.push(p);
-			x++;
-			if (CheckMove(d, x, y)) {
-				d[x][y] = 1;
-			}
-		}
-	}
-	
-
-
 	public static void main(String[] args) {		
-		int [][] data;
-		data = new int [8][8] ;
-		SolveQueen(data);
+		solveQueen();
+		print();
 	}
-
 }

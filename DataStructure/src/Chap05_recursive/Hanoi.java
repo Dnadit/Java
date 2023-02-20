@@ -1,4 +1,4 @@
-package Chap5_recursive;
+package Chap05_recursive;
 
 //하노이의 탑
 

@@ -1,4 +1,4 @@
-package Chap4_스택과큐;
+package Chap04_스택과큐;
 
 import java.lang.RuntimeException;
 import java.lang.reflect.Array;

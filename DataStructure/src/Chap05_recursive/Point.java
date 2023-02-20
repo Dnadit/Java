@@ -1,4 +1,4 @@
-package Chap5_recursive;
+package Chap05_recursive;
 
 	class Point {
 		private int ix;

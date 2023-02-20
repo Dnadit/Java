@@ -1,4 +1,4 @@
-package Chap4_스택과큐;
+package Chap04_스택과큐;
 //int형 고정 길이 큐
 
 public class PointQueue {

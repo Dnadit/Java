@@ -1,4 +1,4 @@
-package 자료구조123장;
+package Chap010203;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
