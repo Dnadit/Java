@@ -40,9 +40,9 @@ import Chap05_recursive.MyStack.EmptyMyStackException;
 
 public class EightQueen {
 	static int nextMove(int[][]d, int row, int y) {
-		for (y = 0; y < d[0].length; y++)
-		if (checkMove(d, row, y))
-			return y;
+		for (int i = y; i < d[0].length; i++)
+		if (checkMove(d, row, i)) 
+			return i;
 		return -1;		
 	}
 	static boolean checkMove(int[][]d, int x, int y) {
@@ -90,36 +90,6 @@ public class EightQueen {
 		}
 		return true;
 	}
-
-	static void SolveQueen(int[][] d) {
-		int x = 0;
-		int y = 0;		
-		MyStack s = new MyStack(100);
-		Point p = new Point(0, 0);
-		
-		while (x < 8) {	
-			while (y < 8) {
-				y = nextMove(d,x,y);
-				if ( y != -1) {
-					d[x][y] = 1;
-					s.push(new Point(x, y));
-					x++;
-					y=0;
-					break;
-				} else {
-					try {
-						p = s.pop();
-						x = p.getX();
-						y = p.getY();
-						d[x][y] = 0;
-						y++;						
-					} catch (EmptyMyStackException e) {						
-						e.printStackTrace();
-					}
-				}
-			}			
-		}
-	}
 	
 	static void print(int[][]d) {
 		for (int i=0; i<d[0].length; i++) {
@@ -130,11 +100,56 @@ public class EightQueen {
 		}
 	}
 	
+	static void SolveQueen(int[][] d) {
+		int x = 0;
+		int y = 0;		
+		MyStack s = new MyStack(100);
+		Point p = new Point(0, 0);
+		while (y < 8) {
+			while (x < 8) {
+				y = nextMove(d,x,y);
+				if ( y != -1) {
+					d[x][y] = 1;
+					s.push(new Point(x, y));
+					y=0;
+					x++;
+				} else {
+					try {
+						p = s.pop();
+						x = p.getX();
+						y = p.getY();
+						d[x][y] = 0;					 
+						y++;					
+					} catch (EmptyMyStackException e) {
+						System.out.println("스택이 비었습니다.");
+					}
+				}
+			}
+			print(d);
+			System.out.println("=========================");
+			// d 배열 0으로 초기화			
+			while(x > -1) {
+				try {
+					p = s.pop();
+					x = p.getX();
+					y = p.getY();
+					d[x][y] = 0;					 
+					x--;					
+				} catch (EmptyMyStackException e) {
+					System.out.println("스택이 비었습니다.");
+				}			
+			}
+			x=0;
+			y++;
+		}
+	}
+	
+	
+	
 	public static void main(String[] args) {		
 		int [][] data;
 		data = new int [8][8] ;
-		SolveQueen(data);
-		print(data);
+		SolveQueen(data);		
 	}
 
 }
