@@ -71,7 +71,7 @@ public class NQueen {
 	
 	
 	public static void solveQueen(int row, int col, int [][] arr) {
-		MyStack1 s = new MyStack1();
+		MyStack1 s = new MyStack1(); 
 		Point1 p = new Point1(0,0);
 		int x = p.getX();
 		int y = p.getY();		
@@ -81,13 +81,13 @@ public class NQueen {
 				if (checkMove(x, y, arr)) {
 					arr[x][y] = 1;
 					s.push(new Point1(x,y));					
-					y=0;
-					x++;
-					break;
+					y=0;                       // y를 0으로 초기화
+					x++;                       // 다음행
+					break;						// 하나 넣었으면 그 행은 더 이상 할 필요 없음.
 				}
 				y++;
 			}
-			if (y == col) {
+			if (y == col) {						// 한행에서 열 검사 다 했는데도 push 하지 않았을 때
 				if(!s.isEmpty()) {
 					p = s.pop();
 					x = p.getX();
@@ -96,7 +96,7 @@ public class NQueen {
 					y++;
 				}
 			}
-			if (x == row) {	
+			if (x == row) {						// 모든 행을 다 채운 경우
 				print(row, col, arr);								
 				if(!s.isEmpty()) {
 					p = s.pop();
