@@ -1,6 +1,6 @@
 package Chap05_recursive;
 
-	class Point {
+public class Point {
 		private int ix;
 		private int iy;
 

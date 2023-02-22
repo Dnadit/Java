@@ -103,7 +103,7 @@ public class EightQueen {
 	static void SolveQueen(int[][] d) {
 		int x = 0;
 		int y = 0;		
-		MyStack s = new MyStack(100);
+		MyStack s = new MyStack(d.length);
 		Point p = new Point(0, 0);
 		while (y < 8) {
 			while (x < 8) {
