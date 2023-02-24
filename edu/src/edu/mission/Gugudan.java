@@ -6,9 +6,10 @@ import java.util.Scanner;
 public class Gugudan {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
 		int col;
 		Scanner kb = new Scanner(System.in);
+		System.out.print("col : ");
 		col = kb.nextInt();
 		
 		for(int i=2; i < 10; i++) {			
@@ -24,6 +25,7 @@ public class Gugudan {
 					else		  System.out.print("\n");
 				}
 			}
+			i = i+col-1;
 			System.out.println("------------");
 		}
 	}
