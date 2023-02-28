@@ -14,7 +14,7 @@ class Node {
 }
 
 class LinkedList {
-	static Node first;
+	Node first;
 
 	public LinkedList() {
 		first = null;

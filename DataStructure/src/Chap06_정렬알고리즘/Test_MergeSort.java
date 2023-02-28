@@ -3,8 +3,8 @@ package Chap06_정렬알고리즘;
 import java.util.Arrays;
 //PhyscData 클래스를 Comparable로 수정해야 한다.
 
+
 public class Test_MergeSort {
-	
 	//MergeSort() 구현 소스 코드를 사용하여 객체들의 정렬 소스코드로 수정한다.
 	
 	public class MergeSortObjects {

@@ -46,7 +46,7 @@ class MaxHeap implements MaxPQ {
 		for (i = n; i >= 1;) {
 			if (i == 1)
 				break; // at root
-			if (x.key <= heap[i / 2].key)
+			if (x.key >= heap[i / 2].key)
 				break;// 자바에서 generic array 사용 안됨
 			// move from parent to i					
 			heap[i] = heap[i / 2];
@@ -70,10 +70,10 @@ class MaxHeap implements MaxPQ {
 
 		for (i = 1, j = 2; j <= n;) {
 			if (j < n)
-				if (heap[j].key < heap[j + 1].key)
+				if (heap[j].key > heap[j + 1].key)
 					j++;
 			// j points to the larger child
-			if (k.key >= heap[j].key)
+			if (k.key <= heap[j].key)
 				break;
 			heap[i] = heap[j];
 			i = j;
