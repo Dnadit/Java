@@ -72,16 +72,75 @@ class Tree {
 			root = NodeX;
 			return true;
 		}
+		if (NodeX.data < p.data) {
+			if (p.LeftChild == null) {
+				p.LeftChild = NodeX;
+				return true;				
+			}
+			q = p;
+			p = p.LeftChild;			
+		}
+		if (NodeX.data > p.data) {
+			if (p.RightChild == null) {
+				p.RightChild = NodeX;
+				return true;				
+			}
+			q = p;
+			p = p.RightChild;			
+		}
+		return false;
 	}
 	
 	boolean delete(int num) {
 		TreeNode p = root, q = null;
 		int branchMode = 0; //1은 left, 2는 right
+		
+		if (p == null)
+			return false;
+		while (p != null) {
+			if (num > p.data) {
+				
+			} 
+			else if (num < p.data) {
+				
+			} 
+			else {
+				q = p;
+				
+			}
+			
+		}
 	
 		return false;
 		
 	}
 	boolean search(int num) {
+		TreeNode p = root;
+		TreeNode q = null;
+		if (p == null)
+			return false;
+		
+		while (p != null) {
+			if (num > p.data) {
+				if (p.RightChild == null) 
+					return false;
+				if (p.RightChild.data == num)
+					return true;
+				q = p;
+				p = p.RightChild;
+			}
+			else if (num < p.data) {
+				if (p.LeftChild == null)
+					return false;
+				if (p.LeftChild.data == num)
+					return true;
+				q = p;
+				p = p.LeftChild;
+			}
+			else {
+				return true;
+			}
+		}
 		return true;
 	}
 }
@@ -148,7 +207,9 @@ public class BinaryTreeInt {
 	          case Delete :           // 노드 삭제 - 어렵다: 난이도 상
 	        	    System.out.println("삭제할 데이터:: ");
 	        	  	num = stdIn.nextInt();
-	                t.delete(num);
+	                if (t.delete(num) == false)
+	                	System.out.println("삭제할 데이터 " + num + "은 없습니다.");
+	                System.out.println("데이터 " + num + " 삭제 완료.");
 	                  break;
 
 	          case Search :           // 노드 검색
@@ -164,6 +225,7 @@ public class BinaryTreeInt {
 
 	          case InorderPrint :            // 전체 노드를 키값의 오름차순으로 표시
 	                 t.inorder();
+	                 System.out.println();
 	                 break;
 	         }
 	     } while (menu != Menu.Exit);
