@@ -35,7 +35,7 @@ class SimpleObject {
 	public static final Comparator<SimpleObject> NO_ORDER = new NoOrderComparator();
 
 	private static class NoOrderComparator implements Comparator<SimpleObject> {
-		public int compare(SimpleObject d1, SimpleObject d2) {
+		public int compare(SimpleObject d1, SimpleObject d2) {			
 			return (d1.no.compareTo(d2.no) > 0) ? 1 : (d1.no.compareTo(d2.no) < 0) ? -1 : 0; // d1.no 가 크면 1 작으면 -1 같으면 0
 		}
 	}
@@ -97,8 +97,13 @@ class LinkedList1 {
 			first = newNode;
 			return;
 		}
-		while(p != null) {
+		while(p != null) {			
 			if (c.compare(p.data, element) > 0) {
+				if (q == null) {					
+					first = newNode;
+					newNode.link = p;
+					return;
+				}
 				newNode.link = p;
 				q.link = newNode;
 				return;
