@@ -72,21 +72,25 @@ class Tree {
 			root = NodeX;
 			return true;
 		}
-		if (NodeX.data < p.data) {
-			if (p.LeftChild == null) {
-				p.LeftChild = NodeX;
-				return true;				
+		while (p != null) {
+			if (NodeX.data < p.data) {
+				if (p.LeftChild == null) {
+					p.LeftChild = NodeX;
+					return true;				
+				}
+				q = p;
+				p = p.LeftChild;
+				continue;
 			}
-			q = p;
-			p = p.LeftChild;			
-		}
-		if (NodeX.data > p.data) {
-			if (p.RightChild == null) {
-				p.RightChild = NodeX;
-				return true;				
+			if (NodeX.data > p.data) {
+				if (p.RightChild == null) {
+					p.RightChild = NodeX;
+					return true;				
+				}
+				q = p;
+				p = p.RightChild;
+				continue;
 			}
-			q = p;
-			p = p.RightChild;			
 		}
 		return false;
 	}
@@ -98,21 +102,21 @@ class Tree {
 		if (p == null)
 			return false;
 		while (p != null) {
-			if (num > p.data) {
-				
-			} 
-			else if (num < p.data) {
-				
-			} 
-			else {
-				q = p;
-				
+			if (q == null) {
+				if (num == p.data && p.LeftChild == null && p.RightChild == null) {	// 찾았고 자식이 둘다 없음
+					root = null;					
+					return true;
+				}
+				else if (num == p.data && p.LeftChild == null) {	// 찾았고 왼쪽 자식이 없음.					
+					p = p.RightChild;
+				} else if (num == p.data) {
+					p = p.LeftChild;
+				}
+					
 			}
-			
+				
 		}
-	
 		return false;
-		
 	}
 	boolean search(int num) {
 		TreeNode p = root;
@@ -195,8 +199,8 @@ public class BinaryTreeInt {
 					count = stdIn.nextInt();
 					int[] input = new int[10];
 					for (int ix = 0; ix < count; ix++) {
-						double d = Math.random();
-						input[ix] = (int) (d * 30);
+						int d = (int)(Math.random()*100);
+						input[ix] = d ;
 					}
 					for (int i = 0; i < count; i++) {
 						if (t.insert(input[i]) == false)
