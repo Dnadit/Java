@@ -18,20 +18,24 @@ class TreeNode {
 
 class Tree {
 	TreeNode root;
+	
 	Tree() {
 		root = null;
 	}
+	
 	TreeNode inorderSucc(TreeNode current) {
 		TreeNode temp = current.RightChild;
 		if (current.RightChild != null)
 			while (temp.LeftChild != null)
-				temp = temp.LeftChild;
+				temp = temp.LeftChild;		
 		return temp;
 	}
+	
 	boolean isLeafNode(TreeNode current) {
 		if (current.LeftChild == null && current.RightChild == null) return true;
 		else return false;
 	}
+	
 	void inorder() {
 		inorder(root);
 	}
@@ -96,28 +100,65 @@ class Tree {
 	}
 	
 	boolean delete(int num) {
-		TreeNode p = root, q = null;
-		int branchMode = 0; //1은 left, 2는 right
+		TreeNode p = root, q = null;		
+		boolean isLeft = true;	// 왼쪽 or 오른쪽
 		
-		if (p == null)
-			return false;
-		while (p != null) {
-			if (q == null) {
-				if (num == p.data && p.LeftChild == null && p.RightChild == null) {	// 찾았고 자식이 둘다 없음
-					root = null;					
-					return true;
-				}
-				else if (num == p.data && p.LeftChild == null) {	// 찾았고 왼쪽 자식이 없음.					
-					p = p.RightChild;
-				} else if (num == p.data) {
-					p = p.LeftChild;
-				}
-					
+		// 위치 찾기.
+		while (true) {
+			if (p == null) {	// root가 null 이면 데이터가 아무것도 없음.
+				return false;
+			}			
+			if (num == p.data) {
+				break;
 			}
-				
+			
+			if (num > p.data) {
+				q = p;
+				p = p.RightChild;
+				isLeft = false;
+			}			
+			if (num < p.data) {
+				q = p;
+				p = p.LeftChild;
+				isLeft = true;
+			}
 		}
-		return false;
+		
+		// 삭제하기. 1.leafNode 2.non-leafNode
+		// 1.leafNode(자식이 없음)
+		if (isLeafNode(p)) {
+			if (p == root)
+				root = null;
+			else if (isLeft)
+				q.LeftChild = null;
+			else 
+				q.RightChild = null;
+		}
+		// 2.non-leafNode(자식이 있음.) >> 1.왼쪽자식이 하나 2.오른쪽자식이 하나 3.자식이 둘
+		else {
+			// 1.왼쪽자식이 하나.			
+			if (p.RightChild == null) {
+				if (isLeft)
+					q.LeftChild = p.LeftChild;
+				else
+					q.RightChild = p.LeftChild;
+			}
+			// 2.오른쪽자식이 하나.
+			if (p.LeftChild == null) {
+				int temp = inorderSucc(p).data;
+				delete(temp);
+				p.data = temp;
+			}
+			// 3.자식이 둘다 있음.
+			if (p.LeftChild != null && p.RightChild != null) {
+				int temp = inorderSucc(p).data;
+				delete(temp);
+				p.data = temp;
+			}
+		}		
+		return true;
 	}
+	
 	boolean search(int num) {
 		TreeNode p = root;
 		TreeNode q = null;
@@ -148,6 +189,7 @@ class Tree {
 		return true;
 	}
 }
+
 public class BinaryTreeInt {
 	enum Menu {
 	     Add(      "삽입"),
@@ -211,10 +253,12 @@ public class BinaryTreeInt {
 	          case Delete :           // 노드 삭제 - 어렵다: 난이도 상
 	        	    System.out.println("삭제할 데이터:: ");
 	        	  	num = stdIn.nextInt();
-	                if (t.delete(num) == false)
+	                if (t.delete(num) == false) {
 	                	System.out.println("삭제할 데이터 " + num + "은 없습니다.");
+	                	break;
+	                }
 	                System.out.println("데이터 " + num + " 삭제 완료.");
-	                  break;
+	                break;
 
 	          case Search :           // 노드 검색
 	        	  	System.out.println("검색할 데이터:: ");
